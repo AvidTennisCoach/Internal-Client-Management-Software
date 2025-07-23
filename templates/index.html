@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block title %}Clients{% endblock %}
+{% block content %}
+<div class="flex justify-between items-center mb-6">
+    <h1 class="text-2xl font-semibold">Clients</h1>
+    <a href="{{ url_for('add_client') }}" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded">
+        + New Client
+    </a>
+</div>
+
+<table class="min-w-full bg-white shadow rounded">
+    <thead>
+        <tr>
+            <th class="py-3 px-6 text-left">Name</th>
+            <th class="py-3 px-6 text-left">Email</th>
+            <th class="py-3 px-6 text-left">Phone</th>
+            <th class="py-3 px-6">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for c in clients %}
+        <tr class="border-t">
+            <td class="py-2 px-6">{{ c[1] }}</td>
+            <td class="py-2 px-6">{{ c[2] }}</td>
+            <td class="py-2 px-6">{{ c[3] or '-' }}</td>
+            <td class="py-2 px-6 text-center">
+                <a href="{{ url_for('edit_client', client_id=c[0]) }}"
+                    class="text-blue-600 hover:underline mr-4">Edit</a>
+                <form action="{{ url_for('delete_client', client_id=c[0]) }}" method="post" style="display:inline;">
+                    <button type="submit" class="text-red-600 hover:underline"
+                        onclick="return confirm('Delete this client?');">Delete</button>
+                </form>
+            </td>
+        </tr>
+        {% else %}
+        <tr>
+            <td colspan="4" class="py-4 text-center text-gray-500">No clients found.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
